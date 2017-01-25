@@ -21,8 +21,7 @@ func newDefaultconv() *structconv {
 		vurlValues: url.Values{}}
 }
 
-//ToURLValues ...
-//转换为url.Values
+//ToURLValues 转换为url.Values
 //如果传入参数不是struct类型，返回空的values
 func ToURLValues(o interface{}) url.Values {
 	val := newDefaultconv()
@@ -30,7 +29,7 @@ func ToURLValues(o interface{}) url.Values {
 	return val.vurlValues
 }
 
-//ToURLValuesWithTimeFormart ...
+//ToURLValuesWithTimeFormart 指定时间格式转换
 //输入:o struct
 //输入:timeformat 日期格式
 func ToURLValuesWithTimeFormart(o interface{}, timeformt string) url.Values {
