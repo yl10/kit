@@ -1,7 +1,6 @@
 # kit组件包 #
-```
 组件包,可以引入kit，也可以单独引入各个需要的子包
-```
+
 ## safemap ##
 加锁的map，直接copy自谢大的beemap
 ```go
@@ -13,3 +12,4 @@ struct和其他格式的转换
 func StructToURLValues(o interface{}) url.Values
 func StructToURLValuesWithTimeFormat(o interface{}, timeformat string) url.Values 
 ```
+[详情](./structconv/readme.md)
