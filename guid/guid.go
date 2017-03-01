@@ -24,6 +24,11 @@ func NewGUID() GUID {
 	return GUID(uuid.New())
 }
 
+//NewGUIDString 生成一个GUID string
+func NewGUIDString() string {
+	return uuid.New()
+}
+
 //NewMD5GUID 根据输入参数生成一个GUID
 func NewMD5GUID(str string) GUID {
 
