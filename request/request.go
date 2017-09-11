@@ -92,3 +92,12 @@ func IsMobile(ua string) bool {
 func IsWeiXin(ua string) bool {
 	return strings.Contains(strings.ToLower(ua), strings.ToLower(UA_WECHAT))
 }
+
+// Url 获取完整的URL
+func Url(r *http.Request) string {
+	scheme := "http://"
+	if r.TLS != nil {
+		scheme = "https://"
+	}
+	return strings.Join([]string{scheme, r.Host, r.RequestURI}, "")
+}
