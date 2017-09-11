@@ -39,7 +39,7 @@ type Node interface {
 	Key() string
 	OrderNumber() int
 	ParentKey() string
-	Parent() (Node, error)
+	GetParent() (Node, error)
 }
 
 //NewTree 创建一个新树
@@ -130,6 +130,7 @@ func NodeSliceToTree(slice interface{}) ([]Tree, error) {
 		var trees []Tree
 		trees = make([]Tree, 0)
 		tempMap := make(map[string][]Tree)
+		tempKeyList := make(map[string]bool)
 		for i := 0; i < v.Len(); i++ {
 			node, ok := v.Index(i).Interface().(Node)
 			if !ok {
@@ -138,6 +139,7 @@ func NodeSliceToTree(slice interface{}) ([]Tree, error) {
 
 			tnode := NewTree(node)
 			tempMap[tnode.ParentKey] = append(tempMap[tnode.ParentKey], *tnode)
+			tempKeyList[tnode.Key] = true
 			trees = append(trees, *tnode)
 		}
 
@@ -148,18 +150,17 @@ func NodeSliceToTree(slice interface{}) ([]Tree, error) {
 		})
 		root := &Tree{}
 		root.Child = make([]Tree, 0)
+
+		for k, v := range trees {
+			fmt.Println(k, ":", "  pid", v.ParentKey, "      id", v.Key)
+		}
 		//建立父子关系，找不到父的，是顶级
 		for i := 0; i < len(trees); i++ {
-			ptreeindex := sort.Search(len(trees), func(j int) bool {
-				if trees[i].ParentKey == trees[j].Key {
-					return true
-				}
-				return false
-			})
-			if ptreeindex >= len(trees) {
+			if !tempKeyList[trees[i].ParentKey] {
 				root.Child = append(root.Child, trees[i])
 			}
 		}
+
 		//建立树
 		root.SortChild()
 		var fn func(r *Tree)

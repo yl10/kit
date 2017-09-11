@@ -19,3 +19,5 @@ func Input(r *http.Request) (url.Values, error)
 
 
 - IsWeiXin 是否微信客户端
+
+- Url 完整的URL
