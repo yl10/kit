@@ -151,9 +151,6 @@ func NodeSliceToTree(slice interface{}) ([]Tree, error) {
 		root := &Tree{}
 		root.Child = make([]Tree, 0)
 
-		for k, v := range trees {
-			fmt.Println(k, ":", "  pid", v.ParentKey, "      id", v.Key)
-		}
 		//建立父子关系，找不到父的，是顶级
 		for i := 0; i < len(trees); i++ {
 			if !tempKeyList[trees[i].ParentKey] {
