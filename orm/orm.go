@@ -14,6 +14,11 @@ type XormPlus struct {
 	fieldMap func(string) string
 }
 
+// NewXormPlus 初始化
+func NewXormPlus(xorm *xorm.Session) (*XormPlus, error) {
+	return &XormPlus{Session: xorm}, nil
+}
+
 // Fetch 获取单条数据
 func (orm *XormPlus) Fetch(inst interface{}, filter interface{}, conds ...interface{}) error {
 	_, err := orm.Where(filter, conds...).Get(inst)
