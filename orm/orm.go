@@ -72,7 +72,7 @@ func (orm *XormPlus) SetFieldMap(fieldMap func(string) string) *XormPlus {
 }
 
 // Collention 将给定的 ds 结果集 按照 mapKeys 的规则映射
-func (orm *XormPlus) Collention(sqlStr string, args ...interface{}) (map[string]interface{}, error) {
+func (orm *XormPlus) Collention(sqlStr string, args ...interface{}) (map[string]string, error) {
 	list, err := orm.Collentions(sqlStr, args...)
 	if err != nil {
 		return nil, err
@@ -86,7 +86,46 @@ func (orm *XormPlus) Collention(sqlStr string, args ...interface{}) (map[string]
 }
 
 // Collentions 将给定的 ds 结果集 按照 mapKeys 的规则映射
-func (orm *XormPlus) Collentions(sqlStr string, args ...interface{}) ([]map[string]interface{}, error) {
+func (orm *XormPlus) Collentions(sqlStr string, args ...interface{}) ([]map[string]string, error) {
+	if orm.fieldMap == nil {
+		orm.fieldMap = hyphen2Hump
+	}
+
+	rawRes, err := orm.QueryString(sqlStr, args...)
+
+	if err != nil {
+		return rawRes, err
+	}
+
+	res := make([]map[string]string, 0)
+	for _, mp := range rawRes {
+		it := make(map[string]string)
+		for key, val := range mp {
+			newKey := orm.fieldMap(key)
+			it[newKey] = val
+		}
+		res = append(res, it)
+	}
+
+	return res, nil
+}
+
+// RawCollention 将给定的 ds 结果集 按照 mapKeys 的规则映射
+func (orm *XormPlus) RawCollention(sqlStr string, args ...interface{}) (map[string]interface{}, error) {
+	list, err := orm.RawCollentions(sqlStr, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(list) == 0 {
+		return nil, nil
+	}
+
+	return list[0], nil
+}
+
+// RawCollentions 将给定的 ds 结果集 按照 mapKeys 的规则映射
+func (orm *XormPlus) RawCollentions(sqlStr string, args ...interface{}) ([]map[string]interface{}, error) {
 	if orm.fieldMap == nil {
 		orm.fieldMap = hyphen2Hump
 	}

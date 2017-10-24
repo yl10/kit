@@ -49,12 +49,26 @@ func SetFieldMap(fieldMap func(string) string) *XormPlus
 ```go
 // 依据原生sql 查询结果
 // sqlStr 是原生sql, args 是传给 sql 的参数
-func Collention(sqlStr string, args ...interface{}) (map[string]interface{}, error)
+func Collention(sqlStr string, args ...interface{}) (map[string]string, error)
 ```
 
 ### Collention 获取多记录, 结果集为 []Map
 ```go
 // 同 Collention 方法一致
 // 只不过返回的是多条记录
-func Collention(sqlStr string, args ...interface{}) (map[string]interface{}, error)
+func Collention(sqlStr string, args ...interface{}) (map[string]string, error)
+```
+
+### RawCollention 获取单行记录, 结果集为 Map
+```go
+// 依据原生sql 查询结果
+// sqlStr 是原生sql, args 是传给 sql 的参数
+func RawCollention(sqlStr string, args ...interface{}) (map[string]interface{}, error)
+```
+
+### RawCollention 获取多记录, 结果集为 []Map
+```go
+// 同 RawCollention 方法一致
+// 只不过返回的是多条记录
+func RawCollention(sqlStr string, args ...interface{}) (map[string]interface{}, error)
 ```
