@@ -91,7 +91,15 @@ func (orm *XormPlus) Collentions(sqlStr string, args ...interface{}) ([]map[stri
 		orm.fieldMap = hyphen2Hump
 	}
 
-	rawRes, err := orm.QueryString(sqlStr, args...)
+	sqlOrArgs := []interface{}{
+		sqlStr,
+	}
+
+	for _, arg := range args {
+		sqlOrArgs = append(sqlOrArgs, arg)
+	}
+
+	rawRes, err := orm.QueryString(sqlOrArgs...)
 
 	if err != nil {
 		return rawRes, err
@@ -130,7 +138,15 @@ func (orm *XormPlus) RawCollentions(sqlStr string, args ...interface{}) ([]map[s
 		orm.fieldMap = hyphen2Hump
 	}
 
-	rawRes, err := orm.QueryInterface(sqlStr, args...)
+	sqlOrArgs := []interface{}{
+		sqlStr,
+	}
+
+	for _, arg := range args {
+		sqlOrArgs = append(sqlOrArgs, arg)
+	}
+
+	rawRes, err := orm.QueryInterface(sqlOrArgs...)
 
 	if err != nil {
 		return rawRes, err
